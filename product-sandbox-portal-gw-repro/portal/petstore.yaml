@@ -1,0 +1,79 @@
+# petstore service 1
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: petstore
+  name: petstore
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: petstore
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: petstore
+    spec:
+      containers:
+      - image: soloio/petstore-example:latest
+        name: petstore
+        ports:
+        - containerPort: 8080
+          name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: petstore
+  namespace: default
+  labels:
+    service: petstore
+spec:
+  ports:
+  - name: http
+    port: 8080
+    protocol: TCP
+  selector:
+    app: petstore
+---
+# petstore service 2
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: petstore2
+  name: petstore2
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: petstore2
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: petstore2
+    spec:
+      containers:
+      - image: soloio/petstore-example:latest
+        name: petstore
+        ports:
+        - containerPort: 8080
+          name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: petstore2
+  namespace: default
+  labels:
+    service: petstore2
+spec:
+  ports:
+  - name: http
+    port: 8080
+    protocol: TCP
+  selector:
+    app: petstore2

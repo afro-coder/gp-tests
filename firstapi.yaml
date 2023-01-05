@@ -1,0 +1,81 @@
+apiVersion: portal.gloo.solo.io/v1beta1
+kind: APIProduct
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"portal.gloo.solo.io/v1beta1","kind":"APIProduct","metadata":{"annotations":{},"labels":{"app.kubernetes.io/instance":"iotmockapp","lob":"iotmock"},"name":"firstapi","namespace":"iotmock"},"spec":{"displayInfo":{"contact":{"email":"iot@airtel.com","name":"iot Support"},"description":"API Product for Pet store","title":"Pet store"},"versions":[{"apis":[{"apiDoc":{"name":"firstapi","namespace":"gloo-portal"},"gatewayConfig":{"route":{"routeRef":{"name":"iot-hub-route-mock","namespace":"gloo-portal"}}},"openApi":{}}],"name":"v1.0.0","tags":{"hr":{},"iot":{}}}]}}
+  creationTimestamp: "2022-12-29T08:16:40Z"
+  generation: 1
+  labels:
+    app.kubernetes.io/instance: iotmockapp
+    lob: iotmock
+  name: firstapi
+  namespace: iotmock
+  resourceVersion: "127575028"
+  uid: a7c88f6e-e96b-4789-88e0-a7dc699f319d
+spec:
+  displayInfo:
+    contact:
+      email: iot@airtel.com
+      name: iot Support
+    description: API Product for Pet store
+    title: Pet store
+  versions:
+  - apis:
+    - apiDoc:
+        name: firstapi
+        namespace: gloo-portal
+      gatewayConfig:
+        route:
+          routeRef:
+            name: iot-hub-route-mock
+            namespace: gloo-portal
+      openApi: {}
+    name: v1.0.0
+    tags:
+      hr: {}
+      iot: {}
+status:
+  modifiedDate: "2022-12-29T08:16:40.246914361Z"
+  observedGeneration: 1
+  observedLabels:
+    app.kubernetes.io/instance: iotmockapp
+    lob: iotmock
+  state: Succeeded
+  versionInfo:
+    v1.0.0:
+      apiRoutes:
+      - method: GET
+        operationId: firstapi.iotmock.firstapi.gloo-portal.findPets
+        path: /rest/FirstAPI/1.0.0/pets
+        route:
+          backends:
+          - upstream:
+              name: iot-hub-upstream-mock
+              namespace: iotmock
+      - method: POST
+        operationId: firstapi.iotmock.firstapi.gloo-portal.addPet
+        path: /rest/FirstAPI/1.0.0/pets
+        route:
+          backends:
+          - upstream:
+              name: iot-hub-upstream-mock
+              namespace: iotmock
+      - method: DELETE
+        operationId: firstapi.iotmock.firstapi.gloo-portal.deletePet
+        path: /rest/FirstAPI/1.0.0/pets/{id}
+        route:
+          backends:
+          - upstream:
+              name: iot-hub-upstream-mock
+              namespace: iotmock
+      - method: GET
+        operationId: firstapi.iotmock.firstapi.gloo-portal.findPetById
+        path: /rest/FirstAPI/1.0.0/pets/{id}
+        route:
+          backends:
+          - upstream:
+              name: iot-hub-upstream-mock
+              namespace: iotmock
+      apiType: OPEN_API
+      numberOfEndpoints: 4

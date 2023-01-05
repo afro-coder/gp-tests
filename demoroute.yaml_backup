@@ -1,0 +1,19 @@
+apiVersion: portal.gloo.solo.io/v1beta1
+kind: Route
+metadata:
+  creationTimestamp: "2022-12-29T05:46:06Z"
+  generation: 4
+  name: demoroute
+  namespace: gloo-portal
+  resourceVersion: "18738"
+  uid: dbfa5112-1573-403b-9443-e6adfc8851a6
+spec:
+  backends:
+  - upstream:
+      name: default-petstore-8080
+      namespace: gloo-system
+  options:
+    hostRewrite: abc.com
+status:
+  observedGeneration: 4
+  state: Succeeded

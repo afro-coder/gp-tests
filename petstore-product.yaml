@@ -1,0 +1,79 @@
+apiVersion: portal.gloo.solo.io/v1beta1
+kind: APIProduct
+metadata:
+  generation: 2
+  labels:
+    app: petstore
+  name: petstore-product
+  namespace: default
+  resourceVersion: "18740"
+  uid: 9ac57f03-3ae7-48de-86b4-7af24b560799
+spec:
+  displayInfo:
+    description: Petstore Product
+    title: Petstore Product
+  versions:
+  - apis:
+    - apiDoc:
+        name: petstore-schema
+        namespace: default
+      openApi: {}
+    gatewayConfig:
+      route:
+        routeRef:
+          name: demoroute
+          namespace: gloo-portal
+    name: v1
+    tags:
+      stable: {}
+status:
+  modifiedDate: "2022-12-29T07:19:12.043272635Z"
+  observedGeneration: 2
+  observedLabels:
+    app: petstore
+  state: Succeeded
+  versionInfo:
+    v1:
+      apiRoutes:
+      - method: GET
+        operationId: petstore-product.default.petstore-schema.default.findPets
+        path: /api/pets
+        route:
+          backends:
+          - upstream:
+              name: default-petstore-8080
+              namespace: gloo-system
+          options:
+            hostRewrite: abc.com
+      - method: POST
+        operationId: petstore-product.default.petstore-schema.default.addPet
+        path: /api/pets
+        route:
+          backends:
+          - upstream:
+              name: default-petstore-8080
+              namespace: gloo-system
+          options:
+            hostRewrite: abc.com
+      - method: DELETE
+        operationId: petstore-product.default.petstore-schema.default.deletePet
+        path: /api/pets/{id}
+        route:
+          backends:
+          - upstream:
+              name: default-petstore-8080
+              namespace: gloo-system
+          options:
+            hostRewrite: abc.com
+      - method: GET
+        operationId: petstore-product.default.petstore-schema.default.findPetById
+        path: /api/pets/{id}
+        route:
+          backends:
+          - upstream:
+              name: default-petstore-8080
+              namespace: gloo-system
+          options:
+            hostRewrite: abc.com
+      apiType: OPEN_API
+      numberOfEndpoints: 4

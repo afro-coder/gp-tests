@@ -1,0 +1,22 @@
+apiVersion: portal.gloo.solo.io/v1beta1
+kind: Route
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"portal.gloo.solo.io/v1beta1","kind":"Route","metadata":{"annotations":{},"labels":{"app.kubernetes.io/instance":"iotmockapp"},"name":"iot-hub-route-mock","namespace":"gloo-portal"},"spec":{"backends":[{"upstream":{"name":"iot-hub-upstream-mock","namespace":"iotmock"}}],"options":null}}
+  creationTimestamp: "2022-12-29T07:46:20Z"
+  generation: 5
+  labels:
+    app.kubernetes.io/instance: iotmockapp
+  name: iot-hub-route-mock
+  namespace: gloo-portal
+  resourceVersion: "127563818"
+  uid: cb46b37a-e23d-4efc-b910-42c4da1bed74
+spec:
+  backends:
+  - upstream:
+      name: iot-hub-upstream-mock
+      namespace: iotmock
+status:
+  observedGeneration: 5
+  state: Succeeded
