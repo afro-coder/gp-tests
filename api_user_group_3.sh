@@ -106,11 +106,11 @@ spec:
     - products:
         namespaces:
         - "*"
-        labels:
-        - key: app
-          operator: Equals
-          values:
-          - petstore
+        #labels:
+        #- key: app
+        #  operator: Equals
+        #  values:
+        #  - petstore
       environments:
         namespaces:
         - "*"

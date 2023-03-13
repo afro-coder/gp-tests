@@ -1,6 +1,7 @@
 #!/bin/bash
 
-PORTAL_VERSION="1.3.0-beta10"
+#PORTAL_VERSION="1.3.0-beta10"
+PORTAL_VERSION="1.3.0-beta16"
 
 helm repo add gloo-portal https://storage.googleapis.com/dev-portal-helm
 helm repo update

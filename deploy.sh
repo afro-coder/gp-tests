@@ -20,7 +20,7 @@ function ctx() {
 kubectx $1
 }
 
-cluster_name="gloo-portal"
+cluster_name="portal"
 #context="kind-gloo-portal"
 #echo -e "Creating a kind cluster\n";
 #
