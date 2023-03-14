@@ -5,3 +5,6 @@ licenseKey:
     name: license
     namespace: gloo-system
     key: license-key
+customCa:
+  secretName: custom-ca-secret
+  secretKey: custom-ca.crt

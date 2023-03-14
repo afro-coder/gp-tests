@@ -26,6 +26,18 @@ spec:
   - petstore.example.com:8080
   - petstore.example.com
   - petstore.example.com:31500
+  - portal.mycompany.corp
+  - portal.mycompany.corp:8080
+  oidcAuth:
+    clientId: 3141d586-4c59-4a49-b87f-97afec655ba4
+    clientSecret:
+      name: petstore-portal-oidc-secret
+      namespace: default
+      key: client_secret # this is the k8s secret we have created above
+    groupClaimKey: group # we will use the 'group' claim in the 'id_token' to associate the user with a group
+    issuer: https://192.168.31.179:8081/realms/master
+
+  portalUrlPrefix: http://192.168.31.179:8081
 
   # This will include all API product of the environment in the portal
   publishedEnvironments:
