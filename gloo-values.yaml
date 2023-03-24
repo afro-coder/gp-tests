@@ -8,3 +8,5 @@ licenseKey:
 customCa:
   secretName: custom-ca-secret
   secretKey: custom-ca.crt
+customCerts:
+  secretName: aerospike-ca

@@ -37,7 +37,7 @@ spec:
     groupClaimKey: group # we will use the 'group' claim in the 'id_token' to associate the user with a group
     issuer: https://192.168.31.179:8081/realms/master
 
-  portalUrlPrefix: http://192.168.31.179:8081
+  portalUrlPrefix: http://portal.mycompany.corp:8080/
 
   # This will include all API product of the environment in the portal
   publishedEnvironments:

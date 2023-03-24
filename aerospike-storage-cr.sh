@@ -8,9 +8,14 @@ metadata:
 spec:
   apikeyStorage:
     aerospike:
-      hostname: 192.168.31.151
-      port: 3000
-      namespace: aerogloo
+      hostname: 192.168.31.179
+      namespace: solo
+      #port: 3000
+      nodeTlsName: nodetls1
+      port: 4333
+      certPath: "/custom-certs/tls.crt"
+      keyPath: "/custom-certs/tls.key"
+      rootCaPath: "/custom-certs/ca.crt"
 EOF
 
 kubectl rollout restart deployment -n gloo-portal gloo-portal-controller
