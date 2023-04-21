@@ -1,0 +1,21 @@
+apiVersion: portal.gloo.solo.io/v1beta1
+kind: Portal
+metadata:
+  name: petstore-portal
+  namespace: apps-portal
+spec:
+  allApisPublicViewable: true
+  customStyling:
+    backgroundColor: '#F9F9F9'
+    defaultTextColor: '#35393B'
+    primaryColor: '#2196C9'
+    secondaryColor: '#253E58'
+  description: Demo Portal
+  displayName: Petstore Portal
+  domains:
+  - demosite.com
+  - demosite.com:8080
+  enableIngress: false
+  publishedEnvironments:
+  - name: newproduct
+    namespace: apps-portal

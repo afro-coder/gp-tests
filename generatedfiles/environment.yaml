@@ -1,0 +1,27 @@
+apiVersion: portal.gloo.solo.io/v1beta1
+kind: Environment
+metadata:
+  name: newproduct
+  namespace: apps-portal
+spec:
+  apiProducts:
+  - labels:
+    - key: app
+      values:
+      - newproduct
+    versions: {}
+  displayInfo:
+    displayName: New Product
+  domains:
+  - demoenv.com
+  - demoenv.com:8080
+  gatewayConfig: {}
+  parameters:
+    usagePlans:
+      testplan:
+        authPolicy:
+          apiKey: {}
+        displayName: testplan
+        rateLimit:
+          requestsPerUnit: 4
+          unit: MINUTE

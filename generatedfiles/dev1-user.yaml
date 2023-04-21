@@ -1,0 +1,17 @@
+apiVersion: portal.gloo.solo.io/v1beta1
+kind: User
+metadata:
+  labels:
+    groups.portal.gloo.solo.io/gloo-portal.developers: "true"
+  name: dev1
+  namespace: gloo-portal
+spec:
+  accessLevel:
+    portals:
+    - name: petstore-portal
+      namespace: apps-portal
+  basicAuth:
+    passwordSecretKey: password
+    passwordSecretName: dev1-password
+    passwordSecretNamespace: gloo-portal
+  username: dev1
