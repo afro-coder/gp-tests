@@ -8,11 +8,11 @@ metadata:
 spec:
   apikeyStorage:
     aerospike:
-      hostname: 192.168.31.151
+      hostname: aerospike.aerospike
       port: 3000
-      namespace: aerogloo
+      namespace: solo
 EOF
 
 kubectl rollout restart deployment -n gloo-portal gloo-portal-controller
 kubectl rollout restart deployment -n gloo-system extauth
-kubectl get -n default authconfig default-petstore-product-dev -oyaml
+kubectl get -n apps-portal authconfig apps-portal-petstore-product-dev -oyaml

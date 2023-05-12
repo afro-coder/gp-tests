@@ -53,15 +53,15 @@ apiVersion: portal.gloo.solo.io/v1beta1
 kind: Environment
 metadata:
   name: dev
-  namespace: default
+  namespace: apps-portal
 spec:
   domains:
   - api.example.com
-  # If you are using Gloo Edge and the Gateway is listening on a port other than 80,
-  # you need to include a domain in this format: <DOMAIN>:<PORT>.
-  # In this example we expect the Gateway to listen on port 32000.
-  - api.example.com:32000
-  - api.example.com:8080
+  ## If you are using Gloo Edge and the Gateway is listening on a port other than 80,
+  ## you need to include a domain in this format: <DOMAIN>:<PORT>.
+  ## In this example we expect the Gateway to listen on port 32000.
+  #- api.example.com:32000
+  #- api.example.com:8080
 
   displayInfo:
     description: This environment is meant for developers to deploy and test their APIs.
@@ -118,7 +118,7 @@ spec:
       - basic
     portals:
     - name: petstore-portal
-      namespace: default
+      namespace: apps-portal
   userSelector:
     matchLabels:
       groups.portal.gloo.solo.io/gloo-portal.developers: "true"

@@ -1,8 +1,21 @@
 #!/bin/bash
-
+set -x
+set -e
 # Create API product https://docs.solo.io/gloo-portal/main/guides/getting_started/part_1/
 # API doc, api product, environment
-
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    kubernetes.io/metadata.name: apps-portal
+  name: apps-portal
+spec:
+  finalizers:
+  - kubernetes
+status:
+  phase: Active
+EOF
 
 kubectl apply -n default -f \
   https://raw.githubusercontent.com/solo-io/gloo/v1.9.0-beta8/example/petstore/petstore.yaml
@@ -13,7 +26,7 @@ apiVersion: portal.gloo.solo.io/v1beta1
 kind: APIDoc
 metadata:
   name: petstore-schema
-  namespace: default
+  namespace: apps-portal
 spec:
   ## specify the type of schema provided in this APIDoc.
   ## openApi is only option at this time.
@@ -24,30 +37,31 @@ spec:
       # 
       # configmaps and inline strings are also supported.
       fetchUrl: http://petstore.default:8080/swagger.json
+      #fetchUrl: https://raw.githubusercontent.com/Azure/api-management-samples/master/apis/httpbin.swagger.json
 
 EOF
 
-kubectl get apidoc -n default petstore-schema -oyaml
+kubectl get apidoc -n apps-portal petstore-schema -oyaml
 
-cat << EOF | kubectl apply -f -
-apiVersion: gloo.solo.io/v1
-kind: Upstream
-metadata:
-  name: default-petstore-8080
-  namespace: gloo-system
-spec:
-  kube:
-    serviceName: petstore
-    serviceNamespace: default
-    servicePort: 8080
-EOF
+#cat << EOF | kubectl apply -f -
+#apiVersion: gloo.solo.io/v1
+#kind: Upstream
+#metadata:
+#  name: default-petstore-8080
+#  namespace: gloo-system
+#spec:
+#  static:
+#    hosts:
+#    - addr: httpbin.org
+#      port: 443
+#EOF
 
 cat << EOF | kubectl apply -f -
 apiVersion: portal.gloo.solo.io/v1beta1
 kind: APIProduct
 metadata:
   name: petstore-product
-  namespace: default
+  namespace: apps-portal
   labels:
     app: petstore
 spec:
@@ -57,7 +71,7 @@ spec:
   # Specify one or more version objects that will each include a list
   # of APIs that compose the version and routing for the version  
   versions:
-  - name: v1
+  - name: v2
     apis:
     # Specify the API Doc(s) that will be included in the Product
     # each specifier can include a list of individual operations
@@ -67,7 +81,7 @@ spec:
     # operations will be imported from the doc. 
     - apiDoc:
         name: petstore-schema
-        namespace: default
+        namespace: apps-portal
     # Each imported operation must have a 'route' associated with it.
     # Here we define a route that will be used by default for all the selected APIProduct version operations.
     # You can also set overrides for this route on each individual operation.
@@ -86,24 +100,24 @@ spec:
 EOF
 
 
-kubectl get apiproducts.portal.gloo.solo.io -n default petstore-product -ojsonpath='{.status.state}'
+kubectl get apiproducts.portal.gloo.solo.io -n apps-portal petstore-product -ojsonpath='{.status.state}'
 
 
-kubectl get apiproducts.portal.gloo.solo.io -n default petstore-product -oyaml
+kubectl get apiproducts.portal.gloo.solo.io -n apps-portal petstore-product -oyaml
 
 cat << EOF | kubectl apply -f -
 apiVersion: portal.gloo.solo.io/v1beta1
 kind: Environment
 metadata:
   name: dev
-  namespace: default
+  namespace: apps-portal
 spec:
   domains:
   # If you are using Gloo Edge and the Gateway is listening on a port other than 80, 
   # you need to include a domain in this format: <DOMAIN>:<PORT>.
+  #- api.example.com:8080
   - api.example.com
-  - api.example.com:8080
-  - api.example.com:31500
+  #- api.example.com:31500
   displayInfo:
     description: This environment is meant for developers to deploy and test their APIs.
     displayName: Development
@@ -124,13 +138,13 @@ spec:
       - stable
 EOF
 
-kubectl get environment -n default dev -ojsonpath='{.status.state}'
+kubectl get environment -n apps-portal dev -ojsonpath='{.status.state}'
 
-kubectl get environments.portal.gloo.solo.io -n default dev -oyaml
+kubectl get environments.portal.gloo.solo.io -n apps-portal dev -oyaml
 
 #export INGRESS_HOST=127.0.0.1
-export INGRESS_PORT=$(kubectl -n gloo-system get service gateway-proxy -o jsonpath='{.spec.ports[?(@.name=="http")].port}')
-kubectl port-forward -n gloo-system svc/gateway-proxy 8080:$INGRESS_PORT &
-export GWPID =$(echo $!)
-echo $GWPID
-curl -v "http://localhost:8080/api/pets" -H "Host: api.example.com"
+#export INGRESS_PORT=$(kubectl -n gloo-system get service gateway-proxy -o jsonpath='{.spec.ports[?(@.name=="http")].port}')
+#kubectl port-forward -n gloo-system svc/gateway-proxy 8080:$INGRESS_PORT &
+#export GWPID =$(echo $!)
+#echo $GWPID
+#curl -v "http://localhost:8080/api/pets" -H "Host: api.example.com"

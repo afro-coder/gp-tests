@@ -6,7 +6,7 @@ apiVersion: portal.gloo.solo.io/v1beta1
 kind: Portal
 metadata:
   name: petstore-portal
-  namespace: default
+  namespace: apps-portal
 spec:
   displayName: Petstore Portal
   description: The Gloo Portal for the Petstore API
@@ -30,13 +30,13 @@ spec:
   # This will include all API product of the environment in the portal
   publishedEnvironments:
   - name: dev
-    namespace: default
+    namespace: apps-portal
 
   # This allows users to view APIs without needing to log in
   allApisPublicViewable: true
 EOF
 
-kubectl get portal -n default petstore-portal -oyaml
+kubectl get portal -n apps-portal petstore-portal -oyaml
 
 curl --silent --resolve petstore.example.com:8080:127.0.0.1 "http://petstore.example.com:8080/api/pets"
 
